@@ -1,0 +1,62 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+def negative_image(image):
+    return 255 - image
+
+def log_transformation(image, c=1):
+    image = np.float32(image) / 255.0
+    log_image = c * np.log1p(image)
+    log_image = np.uint8(log_image * 255)
+    return log_image
+
+def power_law_transformation(image, gamma=1.0, c=1):
+    image = np.float32(image) / 255.0
+    power_image = c * np.power(image, gamma)
+    power_image = np.uint8(power_image * 255)
+    return power_image
+
+def histogram_equalization(image):
+    if len(image.shape) == 2:  # Grayscale image
+        return cv2.equalizeHist(image)
+    else:  # Color image
+        ycrcb = cv2.cvtColor(image, cv2.COLOR_BGR2YCrCb)
+        ycrcb[:, :, 0] = cv2.equalizeHist(ycrcb[:, :, 0])
+        return cv2.cvtColor(ycrcb, cv2.COLOR_YCrCb2BGR)
+
+def histogram_normalization(image):
+    norm_image = cv2.normalize(image, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
+    return np.uint8(norm_image)
+
+def rgb_to_hsi(image):
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    return image
+
+def apply_transformations(image_path):
+    image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+    
+    transformations = {
+        "Negative": negative_image(image),
+        "Log Transformation": log_transformation(image),
+        "Power Law (Gamma=2.0)": power_law_transformation(image, gamma=2.0),
+        "Histogram Equalization": histogram_equalization(image),
+        "Histogram Normalization": histogram_normalization(image),
+    }
+    
+    plt.figure(figsize=(12, 6))
+    plt.subplot(2, 3, 1)
+    plt.imshow(image, cmap='gray')
+    plt.title("Original Image")
+    plt.axis('off')
+    
+    for i, (title, img) in enumerate(transformations.items(), start=2):
+        plt.subplot(2, 3, i)
+        plt.imshow(img, cmap='gray')
+        plt.title(title)
+        plt.axis('off')
+    
+    plt.show()
+    
+# Gantilah 'image.jpg' dengan path gambar yang ingin digunakan
+apply_transformations('/content/drive/MyDrive/pantai bagus/pantai.jpg')
