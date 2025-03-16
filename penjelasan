@@ -1,0 +1,27 @@
+Penjelasan Metode:
+
+Citra Negatif
+
+Input: Gambar grayscale atau berwarna.
+Output: Inversi warna gambar. Piksel terang menjadi gelap dan sebaliknya.
+Transformasi Log
+
+Input: Gambar dengan rentang piksel lebar.
+Output: Meningkatkan detail di area yang lebih gelap.
+Transformasi Power Law (Gamma Correction)
+
+Input: Gambar dengan pencahayaan tidak merata.
+Output: Mengontrol kecerahan gambar dengan parameter gamma.
+Histogram Equalization
+
+Input: Gambar grayscale atau kanal Y dari gambar berwarna.
+Output: Kontras gambar lebih merata.
+Histogram Normalization
+
+Input: Gambar dengan rentang piksel tidak merata.
+Output: Rentang piksel tersebar dari 0 hingga 255.
+Konversi RGB ke HSI dan Penentuan Thresholding
+
+Input: Gambar RGB.
+Output: Gambar dalam format HSV (alternatif dari HSI).
+Thresholding bisa ditentukan dengan memilih rentang nilai hue, saturation, atau intensity yang relevan.
